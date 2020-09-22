@@ -32,6 +32,7 @@ cbuffer UnityPerMaterial {
 
 struct VertexIntput {
     float4 pos : POSITION;
+    UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
 struct VertexOutput {
@@ -40,6 +41,7 @@ struct VertexOutput {
 
 VertexOutput UnlitPassVertex (VertexIntput input) {
     VertexOutput output;
+    UNITY_VERTEX_INPUT_INSTANCE_ID(input);
     float4 worldPos = mul(UNITY_MATRIX_M, float4(input.pos.xyz, 1.0));
     output.clipPos = mul(unity_MatrixVP, worldPos);
     return output;

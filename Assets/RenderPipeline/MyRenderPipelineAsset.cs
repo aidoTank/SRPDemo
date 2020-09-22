@@ -5,8 +5,11 @@ using UnityEngine.Experimental.Rendering;
 public class MyRenderPipelineAsset : RenderPipelineAsset
 {
 
+    [SerializeField] private bool dynamicBatching;
+
+    [SerializeField] private bool instancing;
     protected override IRenderPipeline InternalCreatePipeline()
     {
-        return new MyRenderPipeline();
+        return new MyRenderPipeline(dynamicBatching, instancing);
     }
 }

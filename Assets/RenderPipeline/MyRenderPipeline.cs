@@ -16,6 +16,21 @@ public class MyRenderPipeline : RenderPipeline
         name = "Render Camera"
     };
     Material errorMaterial;
+
+    private DrawRendererFlags drawFlags;
+    public MyRenderPipeline(bool dynamicBatching, bool instancing)
+    {
+        if (dynamicBatching)
+        {
+            drawFlags = DrawRendererFlags.EnableDynamicBatching;
+        }
+
+        if (instancing)
+        {
+            drawFlags |= DrawRendererFlags.EnableInstancing;
+        }
+    }
+
     public void Render(ScriptableRenderContext context, Camera camera)
     {
         ScriptableCullingParameters cullingParameters;
@@ -49,6 +64,8 @@ public class MyRenderPipeline : RenderPipeline
         //draw
         DrawRendererSettings drawSettings = new DrawRendererSettings(camera, 
             new ShaderPassName("SRPDefaultUnlit"));
+        drawSettings.flags = drawFlags;
+        drawSettings.sorting.flags = SortFlags.CommonOpaque;
         var filterSettings = new FilterRenderersSettings(true)
         {
             renderQueueRange = RenderQueueRange.opaque
